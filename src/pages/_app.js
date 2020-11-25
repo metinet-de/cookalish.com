@@ -1,5 +1,6 @@
 import '../../styles/globals.css'
-
+import Router from "next/router";
+import withGA from "next-ga";
 import {ThemeProvider} from "theme-ui";
 import theme from "../utils/theme";
 
@@ -11,4 +12,4 @@ function MyApp({Component, pageProps}) {
     )
 }
 
-export default MyApp
+export default withGA("UA-xxxxxxxxx-1", Router)(MyApp);
