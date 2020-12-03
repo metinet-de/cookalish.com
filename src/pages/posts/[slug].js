@@ -37,7 +37,6 @@ export default function Post({post, morePosts, preview}) {
                                 />
                             </Head>
 
-
                             <div sx={{
                                 display: 'flex',
                                 flexDirection: 'column',

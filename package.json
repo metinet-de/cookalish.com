@@ -12,6 +12,7 @@
     "@mdx-js/loader": "^1.6.21",
     "@next/mdx": "^10.0.2",
     "cosmicjs": "^3.3.2",
+    "encoding": "^0.1.13",
     "lazysizes": "^5.2.2",
     "next": "10.0.2",
     "next-ga": "^2.3.4",
@@ -21,12 +22,22 @@
     "rebass": "^4.0.7",
     "remark": "^13.0.0",
     "remark-html": "^13.0.1",
+    "request": "^2.88.2",
     "sass": "^1.29.0",
     "theme-ui": "^0.3.4"
   },
-  "devDependencies": {
-    "@babel/core": "^7.12.9",
-    "@babel/node": "^7.12.6",
-    "netlify-cli": "^2.68.7"
-  }
+  "devDependencies": {},
+  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
+  "main": "next.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ralusnom/cookalish.git"
+  },
+  "keywords": [],
+  "author": "ralusnom",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ralusnom/cookalish/issues"
+  },
+  "homepage": "https://github.com/ralusnom/cookalish#readme"
 }
