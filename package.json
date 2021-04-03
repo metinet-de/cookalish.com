@@ -23,7 +23,7 @@
     "remark": "^13.0.0",
     "remark-html": "^13.0.1",
     "request": "^2.88.2",
-    "sass": "^1.29.0",
+    "sass": "^1.32.8",
     "theme-ui": "^0.3.4"
   },
   "devDependencies": {},
