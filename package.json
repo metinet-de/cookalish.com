@@ -13,7 +13,7 @@
     "@next/mdx": "^10.0.2",
     "cosmicjs": "^3.4.3",
     "encoding": "^0.1.13",
-    "lazysizes": "^5.2.2",
+    "lazysizes": "^5.3.0",
     "next": "10.0.7",
     "next-ga": "^2.3.4",
     "next-on-netlify": "^2.6.3",
