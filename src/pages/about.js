@@ -6,19 +6,15 @@ import {Box, Flex, jsx, Themed} from 'theme-ui'
 import Head from 'next/head'
 import Layout from '../components/layout'
 import Header from "../components/header";
-import HeroPost from "../components/hero-post";
-import MoreStories from "../components/more-stories";
 import Main from "../components/main";
-import {getAllPostsForHome, getPage} from "@/lib/api";
+import {getPage} from "@/lib/api";
 
 /**
- * @param {string} posts[].thumbnail
+ * @param page
  * @returns {JSX.Element}
  * @constructor
  */
-function Index({allPosts, page}) {
-
-    const morePosts = allPosts.slice(1)
+function About({page}) {
     return (
         <Layout>
             <Head>
@@ -26,7 +22,6 @@ function Index({allPosts, page}) {
             </Head>
             <Header/>
             <Main>
-
                 {page && <Box as="article" sx={{
                     backgroundColor: '#222',
                     marginBottom: '1rem',
@@ -35,36 +30,20 @@ function Index({allPosts, page}) {
                     overflow: 'hidden'
                 }}>
                     <h1>{page.title}</h1>
-
                     <div>{page.metadata?.content}</div>
                 </Box>}
-
-
-                {allPosts.slice(0, 5).map((heroPost) => <HeroPost
-                    id={heroPost.id}
-                    key={heroPost.id}
-                    coverImage={heroPost.metadata?.hero?.imgix_url}
-                    title={heroPost.title}
-                    link={'/posts/' + heroPost.slug}
-                    excerpt={heroPost.metadata?.description}
-                />)}
-
-                {morePosts.length > 0 && <MoreStories posts={morePosts}/>}
             </Main>
         </Layout>
     )
 }
 
 export async function getStaticProps({preview}) {
-    const page = (await getPage('6068bbc64f3f5e0007179405', preview)) || null;
-
-    const allPosts = (await getAllPostsForHome(preview)) || []
+    const page = (await getPage('6068c7fc24f00200079fcc26', preview)) || null;
     return {
         props: {
-            allPosts,
             page
         },
     }
 }
 
-export default Index
+export default About

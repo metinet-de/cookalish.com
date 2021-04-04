@@ -34,6 +34,7 @@ export default function Meta() {
       <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
       <meta name="description" content={`${APP_PROJECT_NAME}.`} />
       <meta property="og:image" content={{}} />
+      <title>Haus</title>
     </Head>
   )
 }
