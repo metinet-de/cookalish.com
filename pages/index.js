@@ -2,13 +2,14 @@
 /** @jsxRuntime classic */
 // noinspection ES6UnusedImports
 import {Box, Flex, jsx, Themed} from 'theme-ui'
-
+//
 import Head from 'next/head'
-import Layout from '../components/layout'
-import Header from "../components/header";
-import HeroPost from "../components/hero-post";
-import MoreStories from "../components/more-stories";
-import Main from "../components/main";
+import Layout from '@/components/layout'
+import Header from "@/components/header";
+import Main from "@/components/main";
+import HeroPost from "@/components/hero-post";
+import MoreStories from "@/components/more-stories";
+
 import {getAllPostsForHome, getPage} from "@/lib/api";
 
 /**
@@ -39,7 +40,6 @@ function Index({allPosts, page}) {
                     <div>{page.metadata?.content}</div>
                 </Box>}
 
-
                 {allPosts.slice(0, 5).map((heroPost) => <HeroPost
                     id={heroPost.id}
                     key={heroPost.id}
@@ -56,6 +56,7 @@ function Index({allPosts, page}) {
 }
 
 export async function getStaticProps({preview}) {
+
     const page = (await getPage('6068bbc64f3f5e0007179405', preview)) || null;
 
     const allPosts = (await getAllPostsForHome(preview)) || []

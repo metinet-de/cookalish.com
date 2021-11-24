@@ -8,13 +8,13 @@ import {Box} from "rebass";
 import Head from 'next/head'
 import {APP_PROJECT_NAME} from "@/lib/constants";
 
-import Main from '../../components/main'
-import PostBody from '../../components/post-body'
-import PostHeader from '../../components/post-header'
-import Layout from '../../components/layout'
-import markdownToHtml from '../../lib/markdownToHtml'
-import Hero from "../../components/Hero";
-import Loader from "../../components/loader";
+import Main from '@/components/main'
+import PostBody from '@/components/post-body'
+import PostHeader from '@/components/post-header'
+import Layout from '@/components/layout'
+import markdownToHtml from '@/lib/markdownToHtml'
+import Hero from "@/components/Hero";
+import Loader from "@/components/loader";
 
 export default function Post({post, morePosts, preview}) {
     const router = useRouter()
@@ -76,7 +76,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({params, preview = null}) {
     const data = await getPost(params.slug)
-    const ingredients = await markdownToHtml(data.post?.metadata?.incredients || '');
+    const ingredients = await markdownToHtml(data.post?.metadata?.ingredients || '');
     const preparation = await markdownToHtml(data.post?.metadata?.preparation || '');
     return {
         props: {

@@ -1,4 +1,4 @@
-import {Box, Flex} from 'theme-ui';
+import {Box, Flex, Image} from 'theme-ui';
 
 /** @jsxImportSource theme-ui */
 
@@ -18,7 +18,7 @@ export default function HeroPost({
             borderRadius: '7px',
             overflow: 'hidden'
         }}><Box sx={{lineHeight: 0}}>
-            <img src={coverImage} sx={{
+            <Image alt={title} src={coverImage} sx={{
                 width: '180px',
                 borderRadius: '3px'
             }}/>

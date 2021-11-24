@@ -1,9 +1,10 @@
 import 'lazysizes'
 import 'lazysizes/plugins/parent-fit/ls.parent-fit'
+import {Image} from "rebass";
 
 export default function Hero({title, url}) {
     return (
-        <img
+        <Image
             alt={title}
             data-sizes="auto"
             data-src={url}

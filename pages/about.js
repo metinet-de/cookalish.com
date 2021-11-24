@@ -4,9 +4,9 @@
 import {Box, Flex, jsx, Themed} from 'theme-ui'
 
 import Head from 'next/head'
-import Layout from '../components/layout'
-import Header from "../components/header";
-import Main from "../components/main";
+import Layout from '@/components/layout'
+import Header from "@/components/header";
+import Main from "@/components/main";
 import {getPage} from "@/lib/api";
 
 /**
@@ -14,7 +14,7 @@ import {getPage} from "@/lib/api";
  * @returns {JSX.Element}
  * @constructor
  */
-function About({page}) {
+export default function About({page}) {
     return (
         <Layout>
             <Head>
@@ -45,5 +45,3 @@ export async function getStaticProps({preview}) {
         },
     }
 }
-
-export default About

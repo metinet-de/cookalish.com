@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { APP_PROJECT_NAME } from '../lib/constants'
+import { APP_PROJECT_NAME } from '@/lib/constants'
 
 export default function Meta() {
   return (
