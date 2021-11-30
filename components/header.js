@@ -1,43 +1,12 @@
-/** @jsxImportSource theme-ui */
-import ColorToggle from "./color-toggle";
-import {Flex, NavLink} from 'theme-ui'
+import Link from 'next/link'
+import {APP_PROJECT_NAME} from "../lib/constants";
 
-export default function Header({children, title}) {
+export default function Header() {
     return (
-        <header sx={{
-            width: '100%',
-            alignSelf: 'center',
-            maxWidth: 768,
-            mx: 'auto',
-            px: 3
-        }}>
-            <Flex sx={{justifyContent: 'space-between'}}>
-                <nav>
-                    <Flex as="ul" sx={{
-                        padding: 0,
-                        listStyle: 'none',
-                        'li': {
-                            padding: 0
-                        }
-                    }}>
-                        <li>
-                            <NavLink href="/" p={2}>
-                                Home
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink href="/about" p={2}>
-                                About
-                            </NavLink>
-                        </li>
-
-                    </Flex>
-                </nav>
-                <div sx={{padding: '8px'}}>
-                    <ColorToggle/>
-                </div>
-            </Flex>
-            {children}
-        </header>
+        <div className="text-2xl md:text-4xl font-bold tracking-tight md:tracking-tighter leading-tight mb-5 mt-8">
+            <Link href="/">
+                <a className="hover:underline">{APP_PROJECT_NAME}</a>
+            </Link>
+        </div>
     )
 }

@@ -1,20 +1,15 @@
-/** @jsxImportSource theme-ui */
-
 import {useRouter} from 'next/router'
 import ErrorPage from 'next/error'
-import {getAllPostsWithSlug, getPost} from '@/lib/api'
-
-import {Box} from "rebass";
+import Container from '../../components/container'
+import PostBody from '../../components/post-body'
+import Header from '../../components/header'
+import PostHeader from '../../components/post-header'
+import Layout from '../../components/layout'
+import {getAllPosts, getPostBySlug} from '../../lib/api'
+import PostTitle from '../../components/post-title'
 import Head from 'next/head'
-import {APP_PROJECT_NAME} from "@/lib/constants";
-
-import Main from '@/components/main'
-import PostBody from '@/components/post-body'
-import PostHeader from '@/components/post-header'
-import Layout from '@/components/layout'
-import markdownToHtml from '@/lib/markdownToHtml'
-import Hero from "@/components/Hero";
-import Loader from "@/components/loader";
+import {APP_PROJECT_NAME} from '../../lib/constants'
+import markdownToHtml from '../../lib/markdownToHtml'
 
 export default function Post({post, morePosts, preview}) {
     const router = useRouter()
@@ -23,70 +18,67 @@ export default function Post({post, morePosts, preview}) {
     }
     return (
         <Layout preview={preview}>
-            <Main>
-                {router.isFallback ? (<Loader/>) : (
-                    <article>
-                        <Head>
-                            <title>
-                                {post.title} | {APP_PROJECT_NAME}
-                            </title>
-                            <meta
-                                property="og:image"
-                                content={post.metadata.hero}
-                            />
-                        </Head>
-
-                        <div sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            minHeight: '100vH',
-                        }}>
+            <Container>
+                <Header/>
+                {router.isFallback ? (
+                    <PostTitle>Loading…</PostTitle>
+                ) : (
+                    <>
+                        <article className="mb-32">
+                            <Head>
+                                <title>
+                                    {post.title} | Delicious Cooking w/ {APP_PROJECT_NAME}
+                                </title>
+                                <meta property="og:image" content={post.ogImage.url}/>
+                            </Head>
                             <PostHeader
                                 title={post.title}
-                                date={post.created_at}
-                                author={post.metadata.author}
+                                coverImage={post.coverImage}
+                                date={post.date}
+                                author={post.author}
                             />
-
-                            <Box p={3} width={['100%', '50%']}>
-                                <Hero image={post.metadata.hero}/>
-                            </Box>
-
-                            <Box p={3} width={['100%', '50%']}>
-                                <h2>🍲 Ingredients</h2>
-                                <PostBody content={post.ingredients}/>
-                            </Box>
-
-                            <h2>👨‍🍳 Preparation</h2>
-                            <PostBody content={post.preparation}/>
-                        </div>
-                    </article>
+                            <PostBody content={post.content}/>
+                        </article>
+                    </>
                 )}
-            </Main>
+            </Container>
         </Layout>
     )
 }
 
-export async function getStaticPaths() {
-    const allPosts = (await getAllPostsWithSlug()) || []
+export async function getStaticProps({params}) {
+    const post = getPostBySlug(params.slug, [
+        'title',
+        'date',
+        'slug',
+        'author',
+        'content',
+        'ogImage',
+        'coverImage',
+    ])
+    const content = await markdownToHtml(post.content || '')
+
     return {
-        paths: allPosts.map((post) => `/posts/${post.slug}`),
-        fallback: true,
+        props: {
+            post: {
+                ...post,
+                content,
+            },
+        },
     }
 }
 
-export async function getStaticProps({params, preview = null}) {
-    const data = await getPost(params.slug)
-    const ingredients = await markdownToHtml(data.post?.metadata?.ingredients || '');
-    const preparation = await markdownToHtml(data.post?.metadata?.preparation || '');
+export async function getStaticPaths() {
+    const posts = getAllPosts(['slug'])
+
     return {
-        props: {
-            preview,
-            post: {
-                ...data.post,
-                ingredients,
-                preparation,
-            },
-            morePosts: data.morePosts || [],
-        },
+        paths: posts.map((post) => {
+            return {
+                params: {
+                    slug: post.slug,
+                },
+            }
+        }),
+        fallback: false,
     }
 }

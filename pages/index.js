@@ -1,71 +1,51 @@
-/** @jsx jsx */
-/** @jsxRuntime classic */
-// noinspection ES6UnusedImports
-import {Box, Flex, jsx, Themed} from 'theme-ui'
-//
+import Container from '../components/container'
+import MoreStories from '../components/more-stories'
+import HeroPost from '../components/hero-post'
+import Intro from '../components/intro'
+import Layout from '../components/layout'
+import { getAllPosts } from '../lib/api'
 import Head from 'next/head'
-import Layout from '@/components/layout'
-import Header from "@/components/header";
-import Main from "@/components/main";
-import HeroPost from "@/components/hero-post";
-import MoreStories from "@/components/more-stories";
+import { APP_PROJECT_NAME } from '../lib/constants'
 
-import {getAllPostsForHome, getPage} from "@/lib/api";
-
-/**
- * @param {string} posts[].thumbnail
- * @returns {JSX.Element}
- * @constructor
- */
-function Index({allPosts, page}) {
-
-    const morePosts = allPosts.slice(1)
-    return (
-        <Layout>
-            <Head>
-                <title>Cookalish</title>
-            </Head>
-            <Header/>
-            <Main>
-
-                {page && <Box as="article" sx={{
-                    backgroundColor: '#222',
-                    marginBottom: '1rem',
-                    borderRadius: '7px',
-                    padding: '0 1rem 1rem',
-                    overflow: 'hidden'
-                }}>
-                    <h1>{page.title}</h1>
-
-                    <div>{page.metadata?.content}</div>
-                </Box>}
-
-                {allPosts.slice(0, 5).map((heroPost) => <HeroPost
-                    id={heroPost.id}
-                    key={heroPost.id}
-                    coverImage={heroPost.metadata?.hero?.imgix_url}
-                    title={heroPost.title}
-                    link={'/posts/' + heroPost.slug}
-                    excerpt={heroPost.metadata?.description}
-                />)}
-
-                {morePosts.length > 0 && <MoreStories posts={morePosts}/>}
-            </Main>
-        </Layout>
-    )
+export default function Index({ allPosts }) {
+  const heroPost = allPosts[0]
+  const morePosts = allPosts.slice(1)
+  return (
+    <>
+      <Layout>
+        <Head>
+          <title>Cookalish Blog Example with {APP_PROJECT_NAME}</title>
+        </Head>
+        <Container>
+          <Intro />
+          {heroPost && (
+            <HeroPost
+              title={heroPost.title}
+              coverImage={heroPost.coverImage}
+              date={heroPost.date}
+              author={heroPost.author}
+              slug={heroPost.slug}
+              excerpt={heroPost.excerpt}
+            />
+          )}
+          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+        </Container>
+      </Layout>
+    </>
+  )
 }
 
-export async function getStaticProps({preview}) {
+export async function getStaticProps() {
+  const allPosts = getAllPosts([
+    'title',
+    'date',
+    'slug',
+    'author',
+    'coverImage',
+    'excerpt',
+  ])
 
-    const page = (await getPage('6068bbc64f3f5e0007179405', preview)) || null;
-
-    const allPosts = (await getAllPostsForHome(preview)) || []
-    return {
-        props: {
-            allPosts,
-            page
-        },
-    }
+  return {
+    props: { allPosts },
+  }
 }
-
-export default Index
